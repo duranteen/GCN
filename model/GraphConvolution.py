@@ -22,7 +22,7 @@ class GraphConvolution(nn.Module):
             self.register_parameter("bias", None)
         self.reset_parameters()
 
-    def register_parameters(self):
+    def reset_parameters(self):
         init.kaiming_uniform_(self.weight)
         if self.use_bias:
             init.zeros_(self.bias)

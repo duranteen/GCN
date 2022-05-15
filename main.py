@@ -3,7 +3,7 @@ import numpy as np
 import torch.cuda
 import torch
 from torch import nn
-from CoraData import CoraData
+from data.CoraData import CoraData
 from model.GCN import GCN
 
 learning_rate = 0.1
@@ -11,7 +11,7 @@ weight_decay = 5e-4
 num_epochs = 200
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-dataset = CoraData().data
+dataset = CoraData(rebuild=True).data
 node_feature = dataset.x / dataset.x.sum(1, keepdims=True) #归一化数据
 tensor_x = torch.from_numpy(node_feature).to(device)
 tensor_y = torch.from_numpy(dataset.y).to(device)

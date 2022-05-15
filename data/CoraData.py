@@ -20,15 +20,15 @@ class CoraData(object):
         :param rebuild:  是否加载缓存
         """
         self.data_root = data_root
-        save_file = os.path.join(self.data_root, "ch5_cached.pkl")
+        save_file = os.path.join(self.data_root, "gcn_cached.pkl")
         if os.path.exists(save_file) and not rebuild:
             print("Using Cashed file: {}".format(save_file))
             self._data = pickle.load(open(save_file, "rb"))
         else:
             self._data = self.process_data()
-            with open(save_file, "wb") as f:
-                pickle.dump(self.data, f)
-            print("Cashed file: {}".format(save_file))
+            # with open(save_file, "wb") as f:
+            #     pickle.dump(self.data, f)
+            # print("Cashed file: {}".format(save_file))
 
     @property
     def data(self):
@@ -72,8 +72,8 @@ class CoraData(object):
 
         return self.Data(x=x, y=y, adjacency=adjacency, train_mask=train_mask, val_mask=val_mask, test_mask=test_mask)
 
-
-    def build_adjacency(self, graph):
+    @staticmethod
+    def build_adjacency(graph):
         """
         :param graph: 邻接表
         :return: 邻接矩阵
@@ -91,8 +91,8 @@ class CoraData(object):
                                       shape=(num_nodes, num_nodes), dtype="float32")
         return adjacency
 
-
-    def read_data(self, path):
+    @staticmethod
+    def read_data(path):
         name = os.path.basename(path)
         if name == "ind.cora.test.index":
             out = np.genfromtxt(path, dtype="int64")
@@ -102,8 +102,8 @@ class CoraData(object):
             out = out.toarray() if hasattr(out, "toarray") else out
             return out
 
-
-    def normalization(self, adjacency):
+    @staticmethod
+    def normalization(adjacency):
         """
         使用度矩阵归一化邻接矩阵
         计算拉普拉斯矩阵
