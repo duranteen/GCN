@@ -7,8 +7,6 @@ from scipy import sparse
 import numpy as np
 
 
-
-
 class CoraData(object):
     Data = namedtuple('Data', ['x', 'y', 'adjacency', 'train_mask', 'val_mask', 'test_mask'])
     filenames = ["ind.cora.{}".format(name) for name in
